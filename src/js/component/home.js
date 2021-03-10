@@ -22,12 +22,14 @@ export function Home() {
 		}
 	};
 
+	/* CONTROLA EL EVENTO PARA MOSTRAR EL BOTON DE ELIMINAR AL PASAR POR ENCIMA DE UN ITEM DE LISTA */
 	const handleMouseOver = (e, id) => {
 		if (itemSelected !== id) {
 			setItemSelected(id);
 		}
 	};
 
+	/* CONTROLA EL EVENTO DE ELIMINAR EL ITEM DE LA LISTA */
 	const handleOnClick = (e, id) => {
 		const list = [...listTask].filter(item => {
 			return item.id !== id;
@@ -37,6 +39,7 @@ export function Home() {
 		updateCountTaskLeft(-1);
 	};
 
+	/* ACTUALIZA CUANTAS TAREAS ESTAN PENDIENTES */
 	const updateCountTaskLeft = add => {
 		if (listTask.length + add <= DISPLAY_TASK_LIMIT && countTaskLeft > 0) {
 			setCountTaskLeft(0);
@@ -45,6 +48,7 @@ export function Home() {
 		}
 	};
 
+	/* DECIDE SI EL BOTON DE ELIMINAR SE MUESTRA O NO */
 	const itemObtenerClases = id => {
 		let visible = "btn btn-outline-secondary float-right";
 		let invisible = "btn btn-outline-secondary float-right invisible";
@@ -56,6 +60,7 @@ export function Home() {
 		}
 	};
 
+	/* GENERA JSX LA LISTA DE MAX 4 ITEMS INICIALES */
 	const generarLista = () => {
 		let lista = [];
 		if (listTask.length <= DISPLAY_TASK_LIMIT) {
@@ -73,6 +78,7 @@ export function Home() {
 		return lista;
 	};
 
+	/* GENERA JSX DE UN ITEM DE LA LISTA */
 	const generarItem = taskDetail => {
 		return (
 			<li
@@ -93,6 +99,7 @@ export function Home() {
 		);
 	};
 
+	/* GENERA JSX INDICANDO SI HAY O NO ITEMS EN LA LISTA */
 	const mostrarLista = () => {
 		if (listTask.length == 0) {
 			return <h5 className="text-muted ml-2">No tasks, add a task</h5>;
@@ -100,16 +107,26 @@ export function Home() {
 			return (
 				<Fragment>
 					<ul className="list-group">{generarLista()}</ul>
-					<div className="card">
-						<ul className="list-group list-group-flush">
-							<li className="list-group-item text-secondary ml-4">
-								{countTaskLeft} items left
-							</li>
-						</ul>
-					</div>
+					{showItemsLeft()}
 				</Fragment>
 			);
 		}
+	};
+
+	const showItemsLeft = () => {
+		if (listTask.length > DISPLAY_TASK_LIMIT) {
+			return (
+				<div className="card">
+					<ul className="list-group list-group-flush">
+						<li className="list-group-item text-secondary ml-4">
+							{listTask.length - DISPLAY_TASK_LIMIT} items left
+						</li>
+					</ul>
+				</div>
+			);
+		}
+
+		return null;
 	};
 
 	return (
