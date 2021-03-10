@@ -9,6 +9,7 @@ export function Home() {
 	const [listTask, setListTask] = useState([]);
 	const [itemSelected, setItemSelected] = useState("");
 
+	/* CONTROLA EL EVENTO PARA INSERTAR TAREAS A LA LISTA */
 	const handleOnKeyDown = e => {
 		if (e.key === "Enter") {
 			//code to execute here
@@ -18,14 +19,6 @@ export function Home() {
 			]);
 			setTask("");
 			updateCountTaskLeft(1);
-		}
-	};
-
-	const updateCountTaskLeft = add => {
-		if (listTask.length + add <= DISPLAY_TASK_LIMIT && countTaskLeft > 0) {
-			setCountTaskLeft(0);
-		} else if (listTask.length + add > DISPLAY_TASK_LIMIT) {
-			setCountTaskLeft(listTask.length + add - DISPLAY_TASK_LIMIT);
 		}
 	};
 
@@ -42,6 +35,14 @@ export function Home() {
 
 		setListTask(list);
 		updateCountTaskLeft(-1);
+	};
+
+	const updateCountTaskLeft = add => {
+		if (listTask.length + add <= DISPLAY_TASK_LIMIT && countTaskLeft > 0) {
+			setCountTaskLeft(0);
+		} else if (listTask.length + add > DISPLAY_TASK_LIMIT) {
+			setCountTaskLeft(listTask.length + add - DISPLAY_TASK_LIMIT);
+		}
 	};
 
 	const itemObtenerClases = id => {
