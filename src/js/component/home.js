@@ -4,7 +4,6 @@ import React, { useState, Fragment } from "react";
 export function Home() {
 	const DISPLAY_TASK_LIMIT = 4;
 
-	const [countTaskLeft, setCountTaskLeft] = useState(0);
 	const [task, setTask] = useState("");
 	const [listTask, setListTask] = useState([]);
 	const [itemSelected, setItemSelected] = useState("");
@@ -18,7 +17,6 @@ export function Home() {
 				{ id: new Date().getTime(), task: task }
 			]);
 			setTask("");
-			updateCountTaskLeft(1);
 		}
 	};
 
@@ -36,16 +34,6 @@ export function Home() {
 		});
 
 		setListTask(list);
-		updateCountTaskLeft(-1);
-	};
-
-	/* ACTUALIZA CUANTAS TAREAS ESTAN PENDIENTES */
-	const updateCountTaskLeft = add => {
-		if (listTask.length + add <= DISPLAY_TASK_LIMIT && countTaskLeft > 0) {
-			setCountTaskLeft(0);
-		} else if (listTask.length + add > DISPLAY_TASK_LIMIT) {
-			setCountTaskLeft(listTask.length + add - DISPLAY_TASK_LIMIT);
-		}
 	};
 
 	/* DECIDE SI EL BOTON DE ELIMINAR SE MUESTRA O NO */
