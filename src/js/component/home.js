@@ -27,6 +27,11 @@ export function Home() {
 		}
 	};
 
+	/* CONTROLA EL EVENTO PARA MOSTRAR EL BOTON DE ELIMINAR AL PASAR POR ENCIMA DE UN ITEM DE LISTA */
+	const handleMouseOut = (e, id) => {
+		setItemSelected("");
+	};
+
 	/* CONTROLA EL EVENTO DE ELIMINAR EL ITEM DE LA LISTA */
 	const handleOnClick = (e, id) => {
 		const list = [...listTask].filter(item => {
@@ -75,6 +80,9 @@ export function Home() {
 				className="list-group-item text-secondary"
 				onMouseOver={e => {
 					handleMouseOver(e, taskDetail.id);
+				}}
+				onMouseOut={e => {
+					handleMouseOut(e, taskDetail.id);
 				}}>
 				<p className="d-inline-block ml-4">{taskDetail.task}</p>
 				<button
