@@ -7,16 +7,22 @@ export function Home() {
 	const [task, setTask] = useState("");
 	const [listTask, setListTask] = useState([]);
 	const [itemSelected, setItemSelected] = useState("");
+	const [error, setError] = useState("");
 
 	/* CONTROLA EL EVENTO PARA INSERTAR TAREAS A LA LISTA */
 	const handleOnKeyDown = e => {
 		if (e.key === "Enter") {
 			//code to execute here
-			setListTask([
-				...listTask,
-				{ id: new Date().getTime(), task: task }
-			]);
-			setTask("");
+			if (task.trim() !== "") {
+				setListTask([
+					...listTask,
+					{ id: new Date().getTime(), task: task }
+				]);
+				setError("");
+				setTask("");
+			} else {
+				setError("Cant add empty task!");
+			}
 		}
 	};
 
@@ -29,7 +35,9 @@ export function Home() {
 
 	/* CONTROLA EL EVENTO PARA MOSTRAR EL BOTON DE ELIMINAR AL PASAR POR ENCIMA DE UN ITEM DE LISTA */
 	const handleMouseOut = (e, id) => {
-		setItemSelected("");
+		if (itemSelected !== "") {
+			setItemSelected("");
+		}
 	};
 
 	/* CONTROLA EL EVENTO DE ELIMINAR EL ITEM DE LA LISTA */
@@ -137,6 +145,9 @@ export function Home() {
 				onKeyDown={e => handleOnKeyDown(e)}
 			/>
 			{mostrarLista()}
+			<p className="text-danger" visible={error !== ""}>
+				{error}
+			</p>
 		</div>
 	);
 }
